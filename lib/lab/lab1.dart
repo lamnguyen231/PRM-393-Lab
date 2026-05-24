@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart'; //for firstwhereornull :) (no linq xDDDD)
 
 class Product {
-  int id;
-  String name;
-  String image;
-  double price;
+  final int id;
+  final String name;
+  final String image;
+  final double price;
 
   Product({
     required this.id,
@@ -64,6 +64,15 @@ class Product {
     );
   }
 
+  Product copyTo({int? id, String? name, String? image, double? price}) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      price: price ?? this.price,
+    );
+  }
+
   @override
   String toString() {
     return 'Product(id: $id | name: $name | image: $image | price: $price)';
@@ -92,20 +101,24 @@ class ProductRepo {
     return Product.products.firstWhereOrNull((product) => product.id == id);
   }
 
-  bool editById(Product? product) {
-    if (product == null) {
-      print("Product is null");
-      return false;
-    }
-
-    int index = Product.products.indexWhere((p) => p.id == product.id);
+  bool editById({required int id, String? name, String? image, double? price}) {
+    int index = Product.products.indexWhere((p) => p.id == id);
 
     if (index == -1) {
       print("Product not found");
       return false;
     }
 
-    Product.products[index] = product;
+    Product oldProduct = Product.products[index];
+
+    Product updatedProduct = oldProduct.copyTo(
+      name: name,
+      image: image,
+      price: price,
+    );
+
+    Product.products[index] = updatedProduct;
+
     print("Product updated successfully");
     return true;
   }
@@ -113,18 +126,17 @@ class ProductRepo {
   void searchByName(String keyword) {
     List<Product> list = [];
     String lowerKeyWord = keyword.toLowerCase();
-    for(var prod in Product.products) {
+    for (var prod in Product.products) {
       String lowerProductName = prod.name.toLowerCase();
-      if(lowerProductName.contains(lowerKeyWord)) {
+      if (lowerProductName.contains(lowerKeyWord)) {
         list.add(prod);
       }
     }
 
     if (list.isEmpty) {
       print("No items contain that keyword");
-    }
-    else {
-      for(var p in list) {
+    } else {
+      for (var p in list) {
         print(p);
       }
     }
@@ -132,7 +144,12 @@ class ProductRepo {
 
   void increasePrice() {
     Product.products = Product.products.map((product) {
-      return Product(id: product.id, name: product.name, image: product.image, price: product.price * 1.1);
+      return Product(
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price * 1.1,
+      );
     }).toList();
   }
 }
@@ -204,28 +221,26 @@ void main() {
   }
 
   print("\n===== TEST EDIT PRODUCT =====");
-  final updatedProduct = Product(
+
+  repo.editById(
     id: 2,
     name: "Gaming Mouse",
     image: "assets/images/gaming_mouse.png",
     price: 500000,
   );
 
-  repo.editById(updatedProduct);
-
   for (var product in Product.products) {
     print(product);
   }
 
   print("\n===== TEST EDIT NON-EXISTING PRODUCT =====");
-  final fakeProduct = Product(
+
+  repo.editById(
     id: 999,
     name: "Fake Product",
     image: "assets/images/fake.png",
     price: 1,
   );
-
-  repo.editById(fakeProduct);
 
   print("\n===== TEST SEARCH BY NAME =====");
   repo.searchByName("phone");
