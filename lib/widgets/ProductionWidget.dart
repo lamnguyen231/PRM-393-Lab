@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Productionwidget extends StatelessWidget {
   const Productionwidget({super.key});
 
@@ -17,18 +18,20 @@ class Productionwidget extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   height: 500,
-                  decoration: BoxDecoration(border: Border.all(width: 5, color: Colors.deepPurple)),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 5, color: Colors.deepPurple),
+                  ),
                   child: Stack(
                     children: [
                       Image.asset("assets/kirby-xd.jpg", fit: BoxFit.fill),
                       Positioned(
-                          bottom: 10,
-                          right: 20,
-                          child: FloatingActionButton.extended(
-                              onPressed: () {},
-                              label: const Text("Add to cart"),
-                              icon: const Icon(Icons.shopping_basket)
-                          )
+                        bottom: 10,
+                        right: 20,
+                        child: FloatingActionButton.extended(
+                          onPressed: () {},
+                          label: const Text("Add to cart"),
+                          icon: const Icon(Icons.shopping_basket),
+                        ),
                       )
                     ],
                   ),
@@ -38,21 +41,21 @@ class Productionwidget extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               flex: 1,
-              child: Row (
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text("AYY CARUMBA"),
-                      Text("DUMA MAY U AR DA GEY SICK")
+                      Text("DUMA MAY U AR DA GEY SICK"),
                     ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Icon(Icons.airline_seat_legroom_extra_sharp),
-                      Text("Outisde ROw xDALKSDASJDKjl")
+                      Text("Outisde ROw xDALKSDASJDKjl"),
                     ],
                   ),
                 ],
@@ -60,7 +63,8 @@ class Productionwidget extends StatelessWidget {
             ),
             const Expanded(
               flex: 2,
-              child: Text("ITEMDESCRIPTION YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE",
+              child: Text(
+                "ITEMDESCRIPTION YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE YIPPEE",
                 textAlign: TextAlign.justify,
               ),
             )
@@ -70,4 +74,3 @@ class Productionwidget extends StatelessWidget {
     );
   }
 }
-

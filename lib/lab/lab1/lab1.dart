@@ -1,48 +1,63 @@
-import 'package:collection/collection.dart'; //for firstwhereornull :) (no linq xDDDD)
-
 class Product {
   final int id;
   final String name;
-  final String image;
+  final String? image;
   final double price;
+  final String? description;
 
   Product({
     required this.id,
     required this.name,
     required this.image,
     required this.price,
+    required this.description,
   });
 
   static List<Product> products = [
     Product(
       id: 1,
-      name: "Laptop",
-      image: "assets/images/laptop.png",
-      price: 15000000,
+      name: "Teddy bear",
+      image:
+          "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400",
+      price: 120,
+      description:
+          "This is a teddy bear. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute.",
     ),
     Product(
       id: 2,
-      name: "Mouse",
-      image: "assets/images/mouse.png",
-      price: 250000,
+      name: "Computer",
+      image:
+          "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400",
+      price: 30,
+      description:
+          "This is a computer. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute.",
     ),
     Product(
       id: 3,
-      name: "Keyboard",
-      image: "assets/images/keyboard.png",
-      price: 750000,
+      name: "Barbie Doll",
+      image:
+          "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400",
+      price: 97,
+      description:
+          "This is a doll. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute.",
     ),
     Product(
       id: 4,
-      name: "Monitor",
-      image: "assets/images/monitor.png",
-      price: 3500000,
+      name: "Mobile",
+      image:
+          "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400",
+      price: 89,
+      description:
+          "This is a mobile. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute.",
     ),
     Product(
       id: 5,
-      name: "Headphone",
-      image: "assets/images/headphone.png",
-      price: 1200000,
+      name: "Teddy bear",
+      image:
+          "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400",
+      price: 120,
+      description:
+          "This is a teddy bear. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute. It is very cute.",
     ),
   ];
 
@@ -50,8 +65,9 @@ class Product {
     return Product(
       id: map["id"],
       name: map["name"] ?? "Unknown",
-      image: map["image"] ?? "kekw",
+      image: map["image"],
       price: map["price"].toDouble(),
+      description: map["description"],
     );
   }
 
@@ -59,23 +75,31 @@ class Product {
     return Product(
       id: json["id"],
       name: json["name"] ?? "Unknown",
-      image: json["image"] ?? "Mama mia",
+      image: json["image"],
       price: json["price"].toDouble(),
+      description: json["description"],
     );
   }
 
-  Product copyTo({int? id, String? name, String? image, double? price}) {
+  Product copyTo({
+    int? id,
+    String? name,
+    String? image,
+    double? price,
+    String? description,
+  }) {
     return Product(
       id: id ?? this.id,
       name: name ?? this.name,
       image: image ?? this.image,
       price: price ?? this.price,
+      description: description ?? this.description,
     );
   }
 
   @override
   String toString() {
-    return 'Product(id: $id | name: $name | image: $image | price: $price)';
+    return 'Product(id: $id | name: $name | image: $image | price: $price | description: $description)';
   }
 }
 
@@ -98,10 +122,22 @@ class ProductRepo {
   }
 
   Product? findById(int id) {
-    return Product.products.firstWhereOrNull((product) => product.id == id);
+    for (var product in Product.products) {
+      if (product.id == id) {
+        return product;
+      }
+    }
+
+    return null;
   }
 
-  bool editById({required int id, String? name, String? image, double? price}) {
+  bool editById({
+    required int id,
+    String? name,
+    String? image,
+    double? price,
+    String? description,
+  }) {
     int index = Product.products.indexWhere((p) => p.id == id);
 
     if (index == -1) {
@@ -115,6 +151,7 @@ class ProductRepo {
       name: name,
       image: image,
       price: price,
+      description: description,
     );
 
     Product.products[index] = updatedProduct;
@@ -149,6 +186,7 @@ class ProductRepo {
         name: product.name,
         image: product.image,
         price: product.price * 1.1,
+        description: product.description,
       );
     }).toList();
   }
@@ -168,6 +206,7 @@ void main() {
     name: "Phone",
     image: "assets/images/phone.png",
     price: 9000000,
+    description: "This is a phone.",
   );
 
   repo.add(newProduct);
@@ -182,6 +221,7 @@ void main() {
     name: "Another Phone",
     image: "assets/images/another_phone.png",
     price: 10000000,
+    description: "This is another phone.",
   );
 
   repo.add(duplicateProduct);
@@ -192,6 +232,7 @@ void main() {
     "name": "Tablet",
     "image": "assets/images/tablet.png",
     "price": 7000000,
+    "description": "This is a tablet.",
   };
 
   repo.addJson(jsonProduct);
@@ -227,6 +268,7 @@ void main() {
     name: "Gaming Mouse",
     image: "assets/images/gaming_mouse.png",
     price: 500000,
+    description: "This is a gaming mouse.",
   );
 
   for (var product in Product.products) {
@@ -240,6 +282,7 @@ void main() {
     name: "Fake Product",
     image: "assets/images/fake.png",
     price: 1,
+    description: "This product does not exist.",
   );
 
   print("\n===== TEST SEARCH BY NAME =====");
