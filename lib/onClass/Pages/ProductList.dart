@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:testxd/lab/lab1/lab1.dart';
-import 'package:testxd/widgets/ProductWidget.dart';
+import 'package:testxd/onClass/entities/Product.dart';
+import 'package:testxd/onClass/widgets/ProductWidget.dart';
 
 class ProductList extends StatelessWidget {
   ProductList({super.key});

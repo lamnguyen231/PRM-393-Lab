@@ -45,6 +45,6 @@ app.*.map.json
 /android/app/release
 
 #Study related
-/lib/entities
+/lib/onClass/entities
 .omo/
 .playwright-mcp/
